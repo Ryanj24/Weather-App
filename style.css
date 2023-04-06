@@ -5,7 +5,7 @@
 }
 
 body {
-    height: 100%;
+    /*height: 100%;*/
     background-color: lime;
 }
 
@@ -13,7 +13,7 @@ header {
     display: flex;
     justify-content: center;
     background-color: rgb(62, 136, 248);
-    height: 15vh;
+    /*height: 10vh;*/
 }
 
 header .search {
@@ -46,34 +46,159 @@ header .search {
     cursor: pointer;
 }
 
-.current-weather {
+.location-weather {
     display: flex;
-    align-items: center;
     flex-direction: column;
     background-color: yellow;
-    height: 55vh;
+    /*height: 60vh;*/
 }
 
-.current-weather .location {
+.location-weather .location {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(243, 105, 243);
     padding: 20px;
-    width: 100%;
 }
 
-.current-weather .location .city {
-    margin-bottom: 15px;
+.location-weather .location .city {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+}
+
+.location-weather .location .city i {
+    margin-right: 15px;
+}
+
+.location-weather .location .date-time {
+    font-size: 25px;
+}
+
+.location-weather .current-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.location-weather .current-weather .temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0 40px 0;
+}
+
+.location-weather .current-weather .temp p:first-child {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.location-weather .current-weather .temp p:nth-child(2) {
+    font-size: 80px;
+}
+
+.location-weather .current-weather .metrics {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: aqua;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.location-weather .current-weather .metrics div {
+    display: flex;
+    background-color: red;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 15px;
+}
+
+.location-weather .current-weather .metrics div .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-weather .current-weather .metrics div .text p:first-child {
     font-size: 30px;
 }
 
-.current-weather .location .date-time {
-    font-size: 20px;
+.location-weather .current-weather .metrics div .text p:last-child {
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.location-weather .current-weather .metrics div:nth-child(2) {
+    margin: 0 15px;
+}
+
+.location-weather .current-weather .metrics div img{
+    height: 64px;
+    width: 64px;
+}
+
+.location-weather .current-weather .metrics .windspeed img{
+    color: rgb(149, 180, 248);
+}
+
+.location-weather .current-weather .todays-weather {
+    width: 100%;
+    background-color: cyan;
+    padding: 15px;
+    display: flex;
+    overflow: auto;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    height: 400px;
+    width: 300px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(192, 170, 170);
+    margin: 0 15px;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast .hour{
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast .condition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast .condition p {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast .highs-lows {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
 
 
-.forecast {
-    background-color: red;
-    height: 30vh;
+.location-weather .current-weather .todays-weather .hour-forecast div p {
+    font-size: 30px;
 }
+
+.location-weather .current-weather .todays-weather .hour-forecast div:first-child {
+    margin-bottom: 15px;
+}
+
+
+
+
