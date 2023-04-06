@@ -184,7 +184,7 @@ header .search {
     margin-bottom: 30px;
 }
 
-.location-weather .current-weather .todays-weather .hour-forecast .highs-lows {
+.location-weather .current-weather .todays-weather .hour-forecast .temp-rain {
     display: flex;
     flex-direction: column;
     padding: 20px;
