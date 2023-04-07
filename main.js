@@ -125,6 +125,150 @@ function createHourlyTab(obj) {
     todaysWeatherDiv.appendChild(container);
 }
 
+
+function dayForecast(obj) {
+    const weekForecastDiv = document.querySelector('.week-forecast');
+
+    // Create card for day
+    const container = document.createElement('div');
+    container.classList.add('weekday');
+
+
+    // Day title
+    const dayTitle = document.createElement('div');
+    dayTitle.classList.add('day');
+    //dayTitle.textContent = '';
+    container.appendChild(dayTitle);
+
+    // Conditions container
+    const conditionsDiv = document.createElement('div');
+    conditionsDiv.classList.add('conditions');
+
+    const conditionsText = document.createElement('p');
+    conditionsText.id = 'conditions-text';
+    //conditionsText.textContent = '';
+    conditionsDiv.appendChild(conditionsText);
+
+    const conditionsImg = document.createElement('img');
+    //conditionsImg.src = '';
+    conditionsDiv.appendChild(conditionsImg);
+    container.appendChild(conditionsDiv);
+
+
+    // Details
+    const detailsDiv = document.createElement('div');
+    detailsDiv.classList.add('details');
+
+    const maxminDiv = document.createElement('div');
+    maxminDiv.classList.add('maxmin-temp');
+    detailsDiv.appendChild(maxminDiv);
+
+    const tempHeader = document.createElement('p');
+    tempHeader.textContent = 'Max/Min Temperature';
+    maxminDiv.appendChild(tempHeader);
+
+
+    const maxDiv = document.createElement('div');
+    maxDiv.classList.add('max');
+
+    const maxImg = document.createElement('img');
+    maxImg.src = './assets/high-temp.png';
+    maxDiv.appendChild(maxImg);
+
+    const maxText = document.createElement('p');
+    maxText.id = 'maxTemp-text';
+    //maxText.textContent = '';
+    maxDiv.appendChild(maxText);
+    maxminDiv.appendChild(maxDiv);
+
+    const minDiv = document.createElement('div');
+    minDiv.classList.add('min');
+
+    const minImg = document.createElement('img');
+    minImg.src = './assets/low-temp.png';
+    minDiv.appendChild(minImg);
+
+    const minText = document.createElement('p');
+    minText.id = 'minTemp-text';
+    //minText.textContent = '';
+    minDiv.appendChild(minText);
+    maxminDiv.appendChild(minDiv);
+
+    // Wind
+    const windContainer = document.createElement('div');
+    windContainer.classList.add('wind');
+    detailsDiv.appendChild(windContainer);
+
+    const windTitle = document.createElement('p');
+    windTitle.textContent = 'Windspeed (mph)';
+    windContainer.appendChild(windTitle);
+
+    const windDiv = document.createElement('div');
+    windDiv.classList.add('wind-div');
+    windContainer.appendChild(windDiv);
+
+    const windImg = document.createElement('img');
+    windImg.src = './assets/wind.png';
+    windContainer.appendChild(windImg);
+
+    const windText = document.createElement('p');
+    //windText.textContent = '';
+    windContainer.appendChild(windText);
+
+
+    // Rain
+    const rainContainer = document.createElement('div');
+    rainContainer.classList.add('rain');
+    detailsDiv.appendChild(rainContainer);
+
+    const rainTitle = document.createElement('p');
+    rainTitle.textContent = 'Chance of Rain';
+    rainContainer.appendChild(rainTitle);
+
+    const rainDiv = document.createElement('div');
+    rainDiv.classList.add('rain-div');
+    rainContainer.appendChild(rainDiv);
+
+    const rainImg = document.createElement('img');
+    rainImg.src = './assets/rain.png';
+    rainContainer.appendChild(rainImg);
+
+    const rainText = document.createElement('p');
+    //rainText.textContent = '';
+    rainContainer.appendChild(rainText);
+
+    container.appendChild(detailsDiv);
+    weekForecastDiv.appendChild(container);
+
+}
+
+/*
+<div class="weekday">
+    <div class="details">
+        <div class="rain">
+            <p>Chance of Rain</p>
+            <div class="rain-div">
+                <img src="./assets/rainfall.png">
+                <p>24%</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
 function clearFunction() {
     const todaysWeatherDiv = document.querySelector('.todays-weather');
     todaysWeatherDiv.innerHTML = '';
