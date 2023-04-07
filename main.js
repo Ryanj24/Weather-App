@@ -9,8 +9,9 @@ const currentCity = document.getElementById('city');
 const currentDateTime = document.getElementById('date-time');
 
 
+
 /* 3 day forecast for glasgow
-fetch(' http://api.weatherapi.com/v1/current.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=3', {mode: 'cors'})
+fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'})
 .then(resp => {
     return resp.json();
 })
@@ -27,7 +28,7 @@ fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b437563523
     console.log(resp.forecast.forecastday[0].hour);
 });*/
 
-
+/*
 const getData = async () => {
     const response = await fetch(' http://api.weatherapi.com/v1/current.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=3', {mode: 'cors'});
 
@@ -61,8 +62,22 @@ forecast().then(resp => {
         createHourlyTab(hr);
     })
     /* Get time for each hour 
-    console.log(hoursArr.chance_of_rain);*/
+    console.log(hoursArr.chance_of_rain);
 })
+
+*/
+
+/* 5 day forecast
+fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'})
+.then(resp => {
+    return resp.json();
+})
+.then(resp => {
+    console.log(resp.forecast.forecastday[1]);
+});*/
+
+
+
 
 
 function createHourlyTab(obj) {
@@ -108,4 +123,9 @@ function createHourlyTab(obj) {
     container.appendChild(tempRain);
 
     todaysWeatherDiv.appendChild(container);
+}
+
+function clearFunction() {
+    const todaysWeatherDiv = document.querySelector('.todays-weather');
+    todaysWeatherDiv.innerHTML = '';
 }
