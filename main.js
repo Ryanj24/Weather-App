@@ -8,75 +8,85 @@ const currentTemp = document.getElementById('current-temperature');
 const currentCity = document.getElementById('city');
 const currentDateTime = document.getElementById('date-time');
 
+const form = document.getElementById('myForm');
+const inputField = document.getElementById('searchbar');
 
 
-const getData = async () => {
-    const response = await fetch(' http://api.weatherapi.com/v1/current.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=3', {mode: 'cors'});
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-    const data = await response.json();
-    return data
-}
+    const city = inputField.value.toLowerCase().trim();
 
-getData().then(resp => {
-    currentCondition.textContent = resp.current.condition.text;
-    currentWind.textContent = `${resp.current.gust_mph}mph`;
-    currentRain.textContent = `${resp.current.precip_mm}mm`;
-    currentHumidity.textContent = `${resp.current.humidity}%`;
-    currentTemp.textContent = `${resp.current.temp_c}\xB0C`;
+    inputField.textContent = '';
 
-    currentCity.textContent = `${resp.location.name}, ${resp.location.country}`;
-
-    const currentDate = new Date(resp.location.localtime).toString().slice(0, 15);
-    currentDateTime.textContent = `${currentDate}`;
-});
-
-
-
-const todaysForecast = async () => {
-    const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=1&aqi=no&alerts=no', {mode: 'cors'})
-
-    const data = await response.json();
-
-    return data
-}
-
-todaysForecast().then(resp => {
-    //console.log(resp);
-    const hoursArr = resp.forecast.forecastday[0].hour;
-
-    for (let i = 0; i < hoursArr.length; i++) {
-        createHourlyTab(hoursArr[i]);
-    }
-
+    todaysData(city);
+    todaysForecast(city);
+    fiveDayForecast(city);
 })
 
 
 
-// 5 day forecast
-
-const fiveDayForecast = async () => {
-    //const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=7&aqi=no&alerts=no', {mode: 'cors'})
-
-    const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'});
+const todaysData = async (city) => {
+    clearFunction();
+    
+    const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=0cf0102eee904623b4375635230504&q=${city}&days=3`, {mode: 'cors'});
     const data = await response.json();
+    
 
-    return data
+    currentCondition.textContent = data.current.condition.text;
+    currentWind.textContent = `${data.current.gust_mph}mph`;
+    currentRain.textContent = `${data.current.precip_mm}mm`;
+    currentHumidity.textContent = `${data.current.humidity}%`;
+    currentTemp.textContent = `${data.current.temp_c}\xB0C`;
 
+    currentCity.textContent = `${data.location.name}, ${data.location.country}`;
+
+    const currentDate = new Date(data.location.localtime).toString().slice(0, 15);
+    currentDateTime.textContent = `${currentDate}`;
 }
 
-fiveDayForecast().then(resp => {
-    //console.log(resp);
 
-    const daysArray = resp.forecast.forecastday;
+
+const todaysForecast = async (city) => {
+    clearFunction();
+    
+    const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=${city}&days=1&aqi=no&alerts=no`, {mode: 'cors'})
+    const data = await response.json();
+
+    
+
+    const hoursArr = data.forecast.forecastday[0].hour;
+
+    for (let i = 0; i < hoursArr.length; i++) {
+        createHourlyTab(hoursArr[i]);
+    }
+}
+
+
+const fiveDayForecast = async (city) => {
+    clearFunction();
+    
+    
+    const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=${city}&days=6&aqi=no&alerts=no`, {mode: 'cors'});
+    const data = await response.json();
+
+    
+    const daysArray = data.forecast.forecastday;
     daysArray.shift();
 
     
     for (let i = 0; i < daysArray.length; i++) {
         dayForecast(daysArray[i]);
     }
-});
+
+}
 
 
+(function initialLocation() {
+    todaysData('glasgow');
+    todaysForecast('glasgow');
+    fiveDayForecast('glasgow');
+})();
 
 
 function createHourlyTab(obj) {
@@ -104,7 +114,6 @@ function createHourlyTab(obj) {
     container.appendChild(condition);
 
     const tempRain = document.createElement('div');
-    //tempRain.classList.add('highs-lows');
     tempRain.classList.add('temp-rain');
 
     const temp = document.createElement('div');
@@ -244,53 +253,10 @@ function dayForecast(obj) {
 
 }
 
-
-
-/*
-<div class="weekday">
-    <div class="day">
-        Saturday 8th April
-    </div>
-    <div class="conditions">
-        <p>Cloudy</p>
-        <img src="./assets/119.png">
-    </div>
-    <div class="details">
-        <div class="maxmin-temp">
-            <p>Max/Min Temperature</p>
-            <div class="max">
-                <img src="./assets/high-temp.png">
-                <p>12</p>
-            </div>
-            <div class="min">
-                <img src="./assets/low-temp.png">
-                <p>5</p>
-            </div>
-        </div>
-        <div class="wind">
-            <p>Windspeed (mph)</p>
-            <div class="wind-div">
-                <img src="./assets/wind.png">
-                <p>8mph</p>
-            </div>
-        </div>
-        <div class="rain">
-            <p>Chance of Rain</p>
-            <div class="rain-div">
-                <img src="./assets/rainfall.png">
-                <p>24%</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-*/
-
-
-
 function clearFunction() {
     const todaysWeatherDiv = document.querySelector('.todays-weather');
     todaysWeatherDiv.innerHTML = '';
+
+    const weekForecastDiv = document.querySelector('.week-forecast');
+    weekForecastDiv.innerHTML = '';
 }

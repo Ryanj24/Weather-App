@@ -16,7 +16,7 @@ header {
     /*height: 10vh;*/
 }
 
-header .search {
+header .search #myForm {
     display: flex;
     align-items: center;
     padding: 20px 0;
@@ -24,7 +24,7 @@ header .search {
     position: relative;
 }
 
-.search input {
+.search input[type=text] {
     padding: 10px 0 10px 35px;
     border: none;
     border-radius: 10px;
@@ -32,7 +32,12 @@ header .search {
     font-size: 25px;
 }
 
-.search i.fa-magnifying-glass {
+.search #myForm button {
+    border: none;
+    background: none;
+}
+
+.search #myForm i.fa-magnifying-glass {
     position: absolute;
     left: 10px;
 }
