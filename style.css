@@ -197,7 +197,7 @@ header .search {
 }
 
 .location-weather .current-weather .todays-weather .hour-forecast div:first-child {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .forecast {

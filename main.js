@@ -10,25 +10,6 @@ const currentDateTime = document.getElementById('date-time');
 
 
 
-/* 3 day forecast for glasgow
-fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'})
-.then(resp => {
-    return resp.json();
-})
-.then(resp => {
-    console.log(resp);
-});*/
-
-/* forecast each hour of 24hr period
-fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=1&aqi=no&alerts=no', {mode: 'cors'})
-.then(resp => {
-    return resp.json();
-})
-.then(resp => {
-    console.log(resp.forecast.forecastday[0].hour);
-});*/
-
-/*
 const getData = async () => {
     const response = await fetch(' http://api.weatherapi.com/v1/current.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=3', {mode: 'cors'});
 
@@ -37,7 +18,6 @@ const getData = async () => {
 }
 
 getData().then(resp => {
-    //console.log(resp);
     currentCondition.textContent = resp.current.condition.text;
     currentWind.textContent = `${resp.current.gust_mph}mph`;
     currentRain.textContent = `${resp.current.precip_mm}mm`;
@@ -45,37 +25,56 @@ getData().then(resp => {
     currentTemp.textContent = `${resp.current.temp_c}\xB0C`;
 
     currentCity.textContent = `${resp.location.name}, ${resp.location.country}`;
-    currentDateTime.textContent = `${resp.location.localtime}`;
+
+    const currentDate = new Date(resp.location.localtime).toString().slice(0, 15);
+    currentDateTime.textContent = `${currentDate}`;
 });
 
-const forecast = async () => {
+
+
+const todaysForecast = async () => {
     const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=1&aqi=no&alerts=no', {mode: 'cors'})
 
     const data = await response.json();
+
     return data
 }
 
-forecast().then(resp => {
+todaysForecast().then(resp => {
+    //console.log(resp);
     const hoursArr = resp.forecast.forecastday[0].hour;
 
-    hoursArr.forEach(hr => {
-        createHourlyTab(hr);
-    })
-    /* Get time for each hour 
-    console.log(hoursArr.chance_of_rain);
+    for (let i = 0; i < hoursArr.length; i++) {
+        createHourlyTab(hoursArr[i]);
+    }
+
 })
 
-*/
 
-/* 5 day forecast
-fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'})
-.then(resp => {
-    return resp.json();
-})
-.then(resp => {
-    console.log(resp.forecast.forecastday[1]);
-});*/
 
+// 5 day forecast
+
+const fiveDayForecast = async () => {
+    //const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=7&aqi=no&alerts=no', {mode: 'cors'})
+
+    const response = await fetch('http://api.weatherapi.com/v1/forecast.json?key=0cf0102eee904623b4375635230504&q=glasgow&days=6&aqi=no&alerts=no', {mode: 'cors'});
+    const data = await response.json();
+
+    return data
+
+}
+
+fiveDayForecast().then(resp => {
+    //console.log(resp);
+
+    const daysArray = resp.forecast.forecastday;
+    daysArray.shift();
+
+    
+    for (let i = 0; i < daysArray.length; i++) {
+        dayForecast(daysArray[i]);
+    }
+});
 
 
 
@@ -105,10 +104,11 @@ function createHourlyTab(obj) {
     container.appendChild(condition);
 
     const tempRain = document.createElement('div');
-    tempRain.classList.add('highs-lows');
+    //tempRain.classList.add('highs-lows');
+    tempRain.classList.add('temp-rain');
 
     const temp = document.createElement('div');
-    temp.classList.add('high-temp');
+    temp.classList.add('temp');
     const tempNum = document.createElement('p');
     tempNum.textContent = `Temperature: ${Math.round(obj.temp_c)}\xB0C`;
     temp.appendChild(tempNum);
@@ -137,7 +137,9 @@ function dayForecast(obj) {
     // Day title
     const dayTitle = document.createElement('div');
     dayTitle.classList.add('day');
-    //dayTitle.textContent = '';
+
+    const date = new Date(obj.date).toString().slice(0, 15);
+    dayTitle.textContent = `${date}`;
     container.appendChild(dayTitle);
 
     // Conditions container
@@ -146,11 +148,11 @@ function dayForecast(obj) {
 
     const conditionsText = document.createElement('p');
     conditionsText.id = 'conditions-text';
-    //conditionsText.textContent = '';
+    conditionsText.textContent = `${obj.day.condition.text}`;
     conditionsDiv.appendChild(conditionsText);
 
     const conditionsImg = document.createElement('img');
-    //conditionsImg.src = '';
+    conditionsImg.src = `./assets${obj.day.condition.icon.slice(34)}`;
     conditionsDiv.appendChild(conditionsImg);
     container.appendChild(conditionsDiv);
 
@@ -177,7 +179,7 @@ function dayForecast(obj) {
 
     const maxText = document.createElement('p');
     maxText.id = 'maxTemp-text';
-    //maxText.textContent = '';
+    maxText.textContent = `${Math.round(obj.day.maxtemp_c)}\xB0C`;
     maxDiv.appendChild(maxText);
     maxminDiv.appendChild(maxDiv);
 
@@ -190,7 +192,7 @@ function dayForecast(obj) {
 
     const minText = document.createElement('p');
     minText.id = 'minTemp-text';
-    //minText.textContent = '';
+    minText.textContent = `${Math.round(obj.day.mintemp_c)}\xB0C`;
     minDiv.appendChild(minText);
     maxminDiv.appendChild(minDiv);
 
@@ -200,7 +202,7 @@ function dayForecast(obj) {
     detailsDiv.appendChild(windContainer);
 
     const windTitle = document.createElement('p');
-    windTitle.textContent = 'Windspeed (mph)';
+    windTitle.textContent = 'Max Windspeed';
     windContainer.appendChild(windTitle);
 
     const windDiv = document.createElement('div');
@@ -209,11 +211,11 @@ function dayForecast(obj) {
 
     const windImg = document.createElement('img');
     windImg.src = './assets/wind.png';
-    windContainer.appendChild(windImg);
+    windDiv.appendChild(windImg);
 
     const windText = document.createElement('p');
-    //windText.textContent = '';
-    windContainer.appendChild(windText);
+    windText.textContent = `${Math.round(obj.day.maxwind_mph)}mph`;
+    windDiv.appendChild(windText);
 
 
     // Rain
@@ -230,21 +232,48 @@ function dayForecast(obj) {
     rainContainer.appendChild(rainDiv);
 
     const rainImg = document.createElement('img');
-    rainImg.src = './assets/rain.png';
-    rainContainer.appendChild(rainImg);
+    rainImg.src = './assets/rainfall.png';
+    rainDiv.appendChild(rainImg);
 
     const rainText = document.createElement('p');
-    //rainText.textContent = '';
-    rainContainer.appendChild(rainText);
+    rainText.textContent = `${obj.day.daily_chance_of_rain}%`;
+    rainDiv.appendChild(rainText);
 
     container.appendChild(detailsDiv);
     weekForecastDiv.appendChild(container);
 
 }
 
+
+
 /*
 <div class="weekday">
+    <div class="day">
+        Saturday 8th April
+    </div>
+    <div class="conditions">
+        <p>Cloudy</p>
+        <img src="./assets/119.png">
+    </div>
     <div class="details">
+        <div class="maxmin-temp">
+            <p>Max/Min Temperature</p>
+            <div class="max">
+                <img src="./assets/high-temp.png">
+                <p>12</p>
+            </div>
+            <div class="min">
+                <img src="./assets/low-temp.png">
+                <p>5</p>
+            </div>
+        </div>
+        <div class="wind">
+            <p>Windspeed (mph)</p>
+            <div class="wind-div">
+                <img src="./assets/wind.png">
+                <p>8mph</p>
+            </div>
+        </div>
         <div class="rain">
             <p>Chance of Rain</p>
             <div class="rain-div">
@@ -257,15 +286,7 @@ function dayForecast(obj) {
 
 
 
-
-
 */
-
-
-
-
-
-
 
 
 
