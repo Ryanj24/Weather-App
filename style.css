@@ -1,26 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Noto Sans JP', sans-serif, Helvetica;
+    color: white;
+}
+
+*::-webkit-scrollbar {
+    width: 16px;
+  }
+
+*::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #080808;
+    border-radius: 10px;
+    border: 2px solid #080808;
 }
 
 body {
-    /*height: 100%;*/
-    background-color: lime;
+    background-image: url(./assets/main-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 header {
     display: flex;
     justify-content: center;
-    background-color: rgb(62, 136, 248);
-    /*height: 10vh;*/
 }
 
 header .search #myForm {
     display: flex;
     align-items: center;
     padding: 20px 0;
-    /*background-color: red;*/
     position: relative;
 }
 
@@ -30,6 +48,11 @@ header .search #myForm {
     border-radius: 10px;
     margin-right: 15px;
     font-size: 25px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.search input[type=text]::placeholder {
+    color: white;
 }
 
 .search #myForm button {
@@ -40,6 +63,7 @@ header .search #myForm {
 .search #myForm i.fa-magnifying-glass {
     position: absolute;
     left: 10px;
+    color: white;
 }
 
 .search i.fa-circle-arrow-right {
@@ -54,15 +78,12 @@ header .search #myForm {
 .location-weather {
     display: flex;
     flex-direction: column;
-    background-color: yellow;
-    /*height: 60vh;*/
 }
 
 .location-weather .location {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(243, 105, 243);
     padding: 20px;
 }
 
@@ -95,7 +116,7 @@ header .search #myForm {
 }
 
 .location-weather .current-weather .temp p:first-child {
-    font-size: 30px;
+    font-size: 60px;
     margin-bottom: 20px;
 }
 
@@ -107,17 +128,25 @@ header .search #myForm {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: aqua;
     padding: 20px;
     margin-bottom: 40px;
 }
 
+
+
 .location-weather .current-weather .metrics div {
     display: flex;
-    background-color: red;
+    align-items: center;
     padding: 5px;
     font-size: 20px;
     border-radius: 15px;
+}
+
+.location-weather .current-weather .metrics .windspeed,
+.location-weather .current-weather .metrics .precipitation,
+.location-weather .current-weather .metrics .humidity {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
 }
 
 .location-weather .current-weather .metrics div .text {
@@ -143,13 +172,9 @@ header .search #myForm {
     width: 64px;
 }
 
-.location-weather .current-weather .metrics .windspeed img{
-    color: rgb(149, 180, 248);
-}
 
 .location-weather .current-weather .todays-weather {
     width: 100%;
-    background-color: cyan;
     padding: 15px;
     display: flex;
     overflow: auto;
@@ -165,7 +190,8 @@ header .search #myForm {
     width: 300px;
     border: none;
     border-radius: 15px;
-    background-color: rgb(192, 170, 170);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
     margin: 0 15px;
 }
 
@@ -173,7 +199,6 @@ header .search #myForm {
     width: 100%;
     text-align: center;
     padding: 20px;
-    border-bottom: 1px solid;
 }
 
 .location-weather .current-weather .todays-weather .hour-forecast .condition {
@@ -182,18 +207,26 @@ header .search #myForm {
     align-items: center;
     width: 100%;
     padding: 20px;
-    border-bottom: 1px solid;
 }
 
 .location-weather .current-weather .todays-weather .hour-forecast .condition p {
     font-size: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+}
+
+.location-weather .current-weather .todays-weather .hour-forecast .condition img {
+    height: 100px;
+    width: 100px;
 }
 
 .location-weather .current-weather .todays-weather .hour-forecast .temp-rain {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -201,8 +234,8 @@ header .search #myForm {
     font-size: 30px;
 }
 
-.location-weather .current-weather .todays-weather .hour-forecast div:first-child {
-    margin-bottom: 5px;
+.location-weather .current-weather .todays-weather .hour-forecast .temp-rain div:first-child {
+    margin-bottom: 10px;
 }
 
 .forecast {
@@ -210,7 +243,6 @@ header .search #myForm {
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: blueviolet;
     padding: 20px;
 }
 
@@ -220,14 +252,13 @@ header .search #myForm {
     justify-content: center;
     grid-template-columns: repeat(auto-fill, minmax(200px, 850px));
     gap: 50px;
-    background-color: aqua;
     width: 100%;
     padding: 20px 0;
 }
 
 .forecast .week-forecast .weekday{
-    /*height: 150px;*/
-    background-color: rgb(161, 157, 157);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
     border: none;
     border-radius: 25px;
     padding: 15px;
@@ -239,8 +270,6 @@ header .search #myForm {
 .forecast .week-forecast .weekday .day {
     grid-column: 1 / -1;
     grid-row: span 1;
-    border-bottom: 1px solid;
-    background-color: yellow;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,7 +280,6 @@ header .search #myForm {
 .forecast .week-forecast .weekday .conditions {
     grid-column: span 1;
     grid-row: 2 / -1;
-    border-right: 1px solid;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -261,6 +289,7 @@ header .search #myForm {
 
 .forecast .week-forecast .weekday .conditions p {
     font-size: 20px;
+    text-align: center;
 }
 
 .forecast .week-forecast .weekday .conditions>img {
@@ -304,8 +333,6 @@ header .search #myForm {
 
 .forecast .week-forecast .weekday .details .wind {
     grid-column: span 1;
-    border-left: 1px solid;
-    border-right: 1px solid;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -314,6 +341,7 @@ header .search #myForm {
 
 .forecast .week-forecast .weekday .details .wind>p {
     font-size: 20px;
+    text-align: center;
 }
 
 .forecast .week-forecast .weekday .details .wind .wind-div{
@@ -338,6 +366,7 @@ header .search #myForm {
 
 .forecast .week-forecast .weekday .details .rain>p {
     font-size: 20px;
+    text-align: center;
 }
 
 .forecast .week-forecast .weekday .details .rain .rain-div {

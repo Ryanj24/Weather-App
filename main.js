@@ -17,7 +17,7 @@ form.addEventListener("submit", (e) => {
 
     const city = inputField.value.toLowerCase().trim();
 
-    inputField.textContent = '';
+    inputField.value = '';
 
     todaysData(city);
     todaysForecast(city);
@@ -117,7 +117,7 @@ function createHourlyTab(obj) {
     tempRain.classList.add('temp-rain');
 
     const temp = document.createElement('div');
-    temp.classList.add('temp');
+    temp.classList.add('forecast-temp');
     const tempNum = document.createElement('p');
     tempNum.textContent = `Temperature: ${Math.round(obj.temp_c)}\xB0C`;
     temp.appendChild(tempNum);
